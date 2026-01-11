@@ -45,3 +45,6 @@ app.*.map.json
 /android/app/release
 
 # Video files and macOS metadata
+/assets/videos/
+**/__MACOSX/
+*.mp4
