@@ -1,11 +1,21 @@
+import 'dart:io' show Platform;
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:toktik/config/theme/app_theme.dart';
 import 'package:toktik/presentation/screens/discover/discover_screen.dart';
 import 'package:toktik/presentation/screens/provider/discover_provider.dart';
- 
-void main() => runApp(MyApp());
- 
+import 'package:video_player_media_kit/video_player_media_kit.dart';
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (!kIsWeb && Platform.isLinux) {
+    VideoPlayerMediaKit.ensureInitialized(linux: true);
+  }
+  runApp(const MyApp());
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -13,10 +23,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-
         ChangeNotifierProvider(
           lazy: false,
-          create: (_) => DiscoverProvider()..loadNextPage()),
+          create: (_) => DiscoverProvider()..loadNextPage(),
+        ),
       ],
       child: MaterialApp(
         title: 'Toktik',
